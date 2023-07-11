@@ -1,6 +1,4 @@
-# Template Assignment Repository for GitHub Octernships
 <!-- Feel free to modify this template to fit your assignment requirements --->
-
 ## [Ivy](https://github.com/unifyai/ivy)[ (unify.ai)](https://unify.ai)
 
 ![Ivy](https://github.com/unifyai/unifyai.github.io/raw/master/img/externally_linked/logo_dark.png?raw=true#gh-dark-mode-only)
