@@ -99,6 +99,9 @@ Please make sure you adhere to the GitHub Octernships Code of Conduct, and follo
 - Make sure you add sufficient comments and documentation at each step. That will allow us to evaluate your work, as well as make the code more friendly to read!
 
 ### Task submission 🚀
+#### 🚨 Task must be submitting in your private repository assigned after applying via [Octernships Dashboard](https://education.github.com/globalcampus/octernships)
+
+Your private assignment repository will be named: `ivy-octernships-ml-USERNAME`
 
 Students are expected to use the [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow) when working on their project. 
 
