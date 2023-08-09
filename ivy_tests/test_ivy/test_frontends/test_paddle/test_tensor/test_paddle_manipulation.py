@@ -450,7 +450,10 @@ def test_paddle_broadcast_to(
         x=x[0],
         shape=shape,
     )
-
+@handle_frontend_test(
+    fn_tree="paddle.reshape_",
+    dtypes_x_reshape=dtypes_x_reshape(),
+)
 def test_paddle_reshape(
     *,
     dtypes_x_reshape,
