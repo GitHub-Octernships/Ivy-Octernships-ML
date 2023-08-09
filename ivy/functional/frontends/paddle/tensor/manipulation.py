@@ -96,3 +96,11 @@ def cast(x, dtype):
 @to_ivy_arrays_and_back
 def broadcast_to(x, shape, name=None):
     return ivy.broadcast_to(x, shape)
+
+@to_ivy_arrays_and_back
+def reshape_(x, shape):
+    return ivy.reshape_(x, shape)
+
+@with_unsupported_dtypes(
+    {"2.5.0 and below": ("float32", "bfloat16"), "paddle")
+    return ivy.reshape_(x, shape)
