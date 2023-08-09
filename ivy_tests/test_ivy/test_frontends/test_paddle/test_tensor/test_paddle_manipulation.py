@@ -450,3 +450,24 @@ def test_paddle_broadcast_to(
         x=x[0],
         shape=shape,
     )
+
+def test_paddle_reshape(
+    *,
+    dtypes_x_reshape,
+    on_device,
+    fn_tree,
+    frontend,
+    test_flags,
+):
+    input_dtype, x, shape = dtypes_x_reshape
+    result = paddle_extension.reshape(x[0], shape)
+    helpers.test_frontend_function(
+        input_dtypes=input_dtype,
+        frontend=frontend,
+        test_flags=test_flags,
+        fn_tree=fn_tree,
+        on_device=on_device,
+        x=x[0],
+        shape=shape,
+        result=result
+    )
