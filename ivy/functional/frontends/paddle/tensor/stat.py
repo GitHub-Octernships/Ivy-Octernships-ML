@@ -45,3 +45,11 @@ def median(x, axis=None, keepdim=False, name=None):
         else ivy.astype(x, ivy.float32)
     )
     return ivy.median(x, axis=axis, keepdims=keepdim)
+
+@with_supported_dtypes(
+    {"2.5.0 and below": ("int8", "int16", "uint8", "float64", "complex64", "complex128")},
+    "paddle",
+)
+@to_ivy_arrays_and_back
+def quantile(a, q, axis = None, keepdims = False, interpolation = "linear"):
+    return ivy.quantile(a = a, q = q, axis=axis, keepdims=keepdims, interpolation = interpolation, out = None)
