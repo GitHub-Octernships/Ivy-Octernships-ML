@@ -1,43 +1,62 @@
-import importlib
 import os
-import glob
+from collections import defaultdict
 
+def get_all_function_names(directory, startswith="test"):
+    """
+    Retrieves all function names from Python files in the specified directory and its subdirectories.
+    
+    Args:
+        directory (str): Path to the directory.
+        startswith (str): Prefix of the functions to extract (default is "test").
 
-def get_all_functions_from_directory(root_dir, startswith="test"):
-    if not os.path.exists(root_dir):
-        print("Invalid directory")
-        exit(1)
-    functions_names = []
-    for filename in glob.iglob(root_dir + "/**/*.py", recursive=True):
-        if len(filename) >= 2 and filename[:2] == "./":
-            filename = filename[2:]
-        filename = filename.replace(".py", "")
-        filename = filename.replace("/", ".")
-        module = importlib.import_module(filename)
-        module_functions_names = [
-            obj for obj in dir(module) if obj.startswith(startswith)
-        ]
-        functions_names.extend(module_functions_names)
-    return functions_names
+    Returns:
+        list: List of all function names.
+    """
+    if not os.path.exists(directory):
+        raise ValueError("Invalid directory")
 
+    function_names = defaultdict(list)
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".py"):
+                file_path = os.path.join(root, file)
+                with open(file_path) as file_obj:
+                    for line in file_obj:
+                        if line.strip().startswith("def " + startswith):
+                            function_name = line.strip().split("(")[0][4:]
+                            function_names[directory].append(function_name)
+    return function_names
 
 def check_duplicate():
-    fn_test_core = get_all_functions_from_directory(
-        "ivy_tests/test_ivy/test_functional/test_core"
-    )
-    fn_test_nn = get_all_functions_from_directory(
-        "ivy_tests/test_ivy/test_functional/test_nn"
-    )
-    fn_test_experimental = get_all_functions_from_directory(
-        "ivy_tests/test_ivy/test_functional/test_experimental"
-    )
-    fn_ivy_test = set(fn_test_core).union(set(fn_test_nn))
-    common_list = fn_ivy_test.intersection(set(fn_test_experimental))
-    return common_list
+    """
+    Checks for common function names across specified directories.
 
+    Returns:
+        dict: Dictionary of common function names for each directory.
+    """
+    core_directory = "ivy_tests/test_ivy/test_functional/test_core"
+    nn_directory = "ivy_tests/test_ivy/test_functional/test_nn"
+    experimental_directory = "ivy_tests/test_ivy/test_functional/test_experimental"
+
+    function_names = {
+        core_directory: get_all_function_names(core_directory),
+        nn_directory: get_all_function_names(nn_directory),
+        experimental_directory: get_all_function_names(experimental_directory)
+    }
+
+    common_function_names = set(function_names[core_directory]) & set(function_names[nn_directory]) & set(function_names[experimental_directory])
+    return common_function_names, function_names
 
 if __name__ == "__main__":
-    common_set = check_duplicate()
-    if len(common_set) != 0:
-        print("This function already exists in the functional API.")
+    common_function_names, function_names = check_duplicate()
+
+    if common_function_names:
+        print("Common functions found across directories:")
+        for function_name in common_function_names:
+            print(function_name)
+        print("These functions already exist in the functional API.")
         exit(1)
+    else:
+        print("No common functions found across directories.")
+
+  
