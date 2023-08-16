@@ -32,7 +32,7 @@ Our primary development solely happens around Python, and we make use of Docker 
 
 ### Octernship role description
 
-- **Submission Date (Updated) **: August 23, 2023
+- **Submission Date (Updated)**: August 23, 2023
 - **Length of the Octernship**: 12 weeks
 - **Stipend**: $1000
 <!--- Use this section to describe the role in as much detail as necessary. Please include the GitHub Classroom assignment submission date, length of the Octernship, and the monthly stipend --->
