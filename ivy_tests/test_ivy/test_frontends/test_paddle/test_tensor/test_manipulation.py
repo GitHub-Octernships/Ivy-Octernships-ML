@@ -674,3 +674,32 @@ def test_paddle_rot90(
         k=k,
         axes=tuple(axes),
     )
+
+
+@handle_frontend_test(
+    fn_tree="paddle.tolist",
+    dtype_and_x=helpers.dtype_and_values(
+        available_dtypes=helpers.get_dtypes("valid"),
+        num_arrays=1,
+        large_abs_safety_factor=20,
+    ),
+)
+def test_paddle_tolist(
+    *,
+    dtype_and_x,
+    on_device,
+    fn_tree,
+    frontend,
+    test_flags,
+    backend_fw,
+):
+    input_dtypes, x = dtype_and_x
+    helpers.test_frontend_function(
+        input_dtypes=input_dtypes,
+        backend_to_test=backend_fw,
+        frontend=frontend,
+        test_flags=test_flags,
+        fn_tree=fn_tree,
+        on_device=on_device,
+        arr=x,
+    )
