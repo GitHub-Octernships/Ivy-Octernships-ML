@@ -2,10 +2,10 @@ name: Auto Close PRs
 
 permissions:
   contents: write
-  pull-requests: write
+  # pull-requests: write
   issues: write
 
-on:
+# on:
   # pull_request_target:
   #   types: [opened, reopened]
 
